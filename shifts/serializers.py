@@ -9,6 +9,7 @@ class ClientSerializer(serializers.Serializer):
     password2 = serializers.CharField(max_length=20)
 
     def validate(self, data):
+        #password validation
         if len(data['password'])<8:
             raise serializers.ValidationError('Password should be atleast 8 charecters long.')
         if data['password']!=data['password2']:

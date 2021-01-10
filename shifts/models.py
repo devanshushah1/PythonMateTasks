@@ -53,6 +53,10 @@ class Shift(models.Model):
     shift_availibility = models.CharField(max_length=100, choices=shift_options)
     weekdays = models.CharField(max_length=15)
 
+    def get_weekdays(self):
+        days = self.weekdays.split(', ')
+        return days
+
     
 
 
