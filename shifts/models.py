@@ -51,7 +51,7 @@ class Shift(models.Model):
     departure_time = models.TimeField()
     repeat = models.CharField(max_length=50, choices=repeat_options)
     shift_availibility = models.CharField(max_length=100, choices=shift_options)
-    weekdays = models.CharField(max_length=15)
+    weekdays = models.CharField(max_length=50)
 
     def get_weekdays(self):
         days = self.weekdays.split(', ')
