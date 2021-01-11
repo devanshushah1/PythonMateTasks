@@ -46,6 +46,7 @@ class Shift(models.Model):
     shift_options = [
         ("Morning Shift - 5am to 9am", "Morning Shift - 5am to 9am")
     ]
+    created_by = models.ForeignKey(Client, null=True, on_delete=models.CASCADE)
     start_date = models.DateField()
     arrival_time = models.TimeField()
     departure_time = models.TimeField()

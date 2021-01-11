@@ -21,6 +21,16 @@ class ClientSerializer(serializers.Serializer):
         return Client.objects.create_user(data['email'], data['password'])
 
 class ShiftSerializer(serializers.ModelSerializer):
+    created_by = serializers.EmailField(read_only=True)
     class Meta:
         model = Shift
-        fields = ['id', 'start_date', 'arrival_time', 'departure_time', 'repeat', 'shift_availibility', 'weekdays']
+        fields = ['id', 'created_by', 'start_date', 'arrival_time', 'departure_time', 'repeat', 'shift_availibility', 'weekdays']
+
+    def validate(self, data):
+        print(1)
+        allowed_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        for i in data['weekdays'].split(', '):
+            if i not in allowed_days:
+                raise serializers.ValidationError({"weekdays":"Enter the days in correct format: Monday, Tuesday, etc."})
+                break;
+        return data

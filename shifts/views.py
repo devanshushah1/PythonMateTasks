@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -23,5 +23,8 @@ class ShiftListOrCreate(ListCreateAPIView):
     permission_classes = [IsAuthenticated,]
     queryset = Shift.objects.all()
     serializer_class = ShiftSerializer
-        
-        
+    
+    def perform_create(self, serializer):
+        client = get_object_or_404(Client, id=self.request.user.id)
+        serializer.save(created_by=client)
+        return super().perform_create(serializer)
